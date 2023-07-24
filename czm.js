@@ -22,7 +22,7 @@ const hfovElement = document.getElementById("hfov");
 const submitElement = document.getElementById("submit");
 
 const waittime_ss = 4000
-const waittime_csv = 4000
+const waittime_csv = 2000
 
 function moveCamera(){
         const frustum = new Cesium.PerspectiveFrustum({
@@ -51,7 +51,7 @@ viewer.scene.globe.maximumScreenSpaceError = 1.5;
 viewer.scene.postProcessStages.fxaa.enabled = false;
 moveCamera()
 var targetResolutionScale = 3.0;
-var latlonResolutionScale = 1.0;
+var latlonResolutionScale = 0.25;
 
 /*var prepareScreenshot = function(){
     var canvas = viewer.canvas;
@@ -92,9 +92,10 @@ function getPixelCoords(){
     viewer.resolutionScale = latlonResolutionScale;
     viewer.render();
     var out_string = '';
+    var s = 1/latlonResolutionScale;
     for(var i=0; i<viewer.canvas.width; i++){
         for(var j=0; j<viewer.canvas.height;j++){
-            var pos_pix = new Cesium.Cartesian2(i, j)
+            var pos_pix = new Cesium.Cartesian2(i*s, j*s)
             var pos_cartesian = camera.pickEllipsoid(pos_pix, viewer.scene.globe.ellipsoid)
             if (pos_cartesian){
                 var pos_cartographic = Cesium.Cartographic.fromCartesian(pos_cartesian);           

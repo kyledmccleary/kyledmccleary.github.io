@@ -66,3 +66,7 @@
     });
     // Make the camera track this moving entity.
     viewer.trackedEntity = airplaneEntity;
+
+
+    
+

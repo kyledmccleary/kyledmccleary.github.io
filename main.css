@@ -1389,10 +1389,13 @@ span.cesium-projectionPicker-wrapper {
     position: relative;
     top: 0;
     left: 0;
-    /*width: 864px;
-    height: 648px;*/
-    width: 2592px;
-    height:1944px;
+    width: 864px;
+    height: 648px;
+    /*width: 2592px;
+    height:1944px;*/
+    /*width: 324px;
+    height: 243px;*/
+
 }
 
 .cesium-viewer-cesiumWidgetContainer {

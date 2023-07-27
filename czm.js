@@ -2,7 +2,7 @@ Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOi
 const viewer = new Cesium.Viewer("cesiumContainer", {
     contextOptions: {
         webgl: {
-            preserveDrawingBuffer: false
+            preserveDrawingBuffer: true
         }
     }
 });
@@ -87,18 +87,15 @@ var captureScreenshot = function(){
 }*/
 
 function captureScreenshot(filename){       
-    viewer.render();
-    setTimeout(function(){       
-        var img = viewer.canvas.toDataURL();
-        var link = document.createElement('a');
-        //var filename = "test.png";
-        //lonElement.value.toFixed(0).toString() + '_' + latElement.value.toFixed(0).toString()+'_'
-            //+altElement.value.toFixed(0).toString()+'_'+headingElement.value.toFixed(0).toString() +'_'
-            //+pitchElement.value.toFixed(0).toString()+'_'+rollElement.value.toFixed(0).toString()+'.png';
-        link.download = filename + '.png'
-        link.href = img;
-        link.click();
-    }, waittime_ss)
+    var img = viewer.canvas.toDataURL();
+    var link = document.createElement('a');
+    //var filename = "test.png";
+    //lonElement.value.toFixed(0).toString() + '_' + latElement.value.toFixed(0).toString()+'_'
+        //+altElement.value.toFixed(0).toString()+'_'+headingElement.value.toFixed(0).toString() +'_'
+        //+pitchElement.value.toFixed(0).toString()+'_'+rollElement.value.toFixed(0).toString()+'.png';
+    link.download = filename + '.png'
+    link.href = img;
+    link.click();
 }
 function getPixelCoords(){
     //viewer.resolutionScale = latlonResolutionScale;
@@ -206,10 +203,13 @@ function sequence(){
     var filename = getPixelCoords();
    // if(!filename.startsWith("5000")){
     viewer.resolutionScale = targetResolutionScale;
-    captureScreenshot(filename);
-        //setTimeout(function(){
-      //      getPixelCoords();
-       // }, waittime_ss)     
+    viewer.render()
+    setTimeout(function(){  
+        captureScreenshot(filename);
+            //setTimeout(function(){
+          //      getPixelCoords();
+           // }, waittime_ss)     
+    }, waittime_ss)
     setTimeout(function(){
         sequence();
     }, waittime_ss)

@@ -2,7 +2,7 @@ Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOi
 const viewer = new Cesium.Viewer("cesiumContainer", {
     contextOptions: {
         webgl: {
-            preserveDrawingBuffer: true
+            preserveDrawingBuffer: false
         }
     }
 });
@@ -35,7 +35,7 @@ const randPitchMaxElement = document.getElementById("randpitchmax")
 const randRollMinElement = document.getElementById("randrollmin")
 const randRollMaxElement = document.getElementById("randrollmax")
 
-const waittime_ss = 4000
+const waittime_ss = 3000
 
 function moveCamera(){
         const frustum = new Cesium.PerspectiveFrustum({
@@ -86,8 +86,7 @@ var captureScreenshot = function(){
     viewer.resolutionScale = 1.0;
 }*/
 
-function captureScreenshot(filename){    
-    viewer.resolutionScale = targetResolutionScale;
+function captureScreenshot(filename){       
     viewer.render();
     setTimeout(function(){       
         var img = viewer.canvas.toDataURL();
@@ -206,6 +205,7 @@ function sequence(){
     moveCamera();
     var filename = getPixelCoords();
    // if(!filename.startsWith("5000")){
+    viewer.resolutionScale = targetResolutionScale;
     captureScreenshot(filename);
         //setTimeout(function(){
       //      getPixelCoords();

@@ -205,19 +205,20 @@ function sequence(){
     rollElement.value = val[5]
     moveCamera();
     var filename = getPixelCoords();
-    if(!filename.startsWith("5000")){
-        captureScreenshot(filename);
+   // if(!filename.startsWith("5000")){
+    captureScreenshot(filename);
         //setTimeout(function(){
       //      getPixelCoords();
        // }, waittime_ss)     
+    setTimeout(function(){
+        sequence();
+    }, waittime_ss)
+  //  }
+   /* else{
         setTimeout(function(){
             sequence();
         }, waittime_ss)
-    }
-    else{
-        sequence()
-    }
-    
+    }   */
 }
 sequenceElement = document.getElementById("sequence")
 sequenceElement.addEventListener("click", function() {

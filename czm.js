@@ -20,9 +20,22 @@ const pitchElement = document.getElementById("pitch");
 const rollElement = document.getElementById("roll");
 const hfovElement = document.getElementById("hfov");
 const submitElement = document.getElementById("submit");
+const randomElement = document.getElementById("random");
+const latMinElement = document.getElementById("randlatmin")
+const latMaxElement = document.getElementById("randlatmax")
+const lonMinElement = document.getElementById("randlonmin")
+const lonMaxElement = document.getElementById("randlonmax")
+const altMinElement = document.getElementById("randaltmin")
+const altMaxElement = document.getElementById("randaltmax")
+const numRandViewsElement = document.getElementById("numrandviews")
+const randHeadingMinElement = document.getElementById("randheadmin")
+const randHeadingMaxElement = document.getElementById("randheadmax")
+const randPitchMinElement = document.getElementById("randpitchmin")
+const randPitchMaxElement = document.getElementById("randpitchmax")
+const randRollMinElement = document.getElementById("randrollmin")
+const randRollMaxElement = document.getElementById("randrollmax")
 
 const waittime_ss = 4000
-const waittime_csv = 2000
 
 function moveCamera(){
         const frustum = new Cesium.PerspectiveFrustum({
@@ -73,34 +86,42 @@ var captureScreenshot = function(){
     viewer.resolutionScale = 1.0;
 }*/
 
-function captureScreenshot(){    
+function captureScreenshot(filename){    
     viewer.resolutionScale = targetResolutionScale;
     viewer.render();
     setTimeout(function(){       
         var img = viewer.canvas.toDataURL();
         var link = document.createElement('a');
-        var filename = "test.png";
+        //var filename = "test.png";
         //lonElement.value.toFixed(0).toString() + '_' + latElement.value.toFixed(0).toString()+'_'
             //+altElement.value.toFixed(0).toString()+'_'+headingElement.value.toFixed(0).toString() +'_'
             //+pitchElement.value.toFixed(0).toString()+'_'+rollElement.value.toFixed(0).toString()+'.png';
-        link.download = filename
+        link.download = filename + '.png'
         link.href = img;
         link.click();
     }, waittime_ss)
 }
 function getPixelCoords(){
-    viewer.resolutionScale = latlonResolutionScale;
-    viewer.render();
+    //viewer.resolutionScale = latlonResolutionScale;
+    //viewer.render();
     var out_string = '';
     var s = 1/latlonResolutionScale;
-    for(var i=0; i<viewer.canvas.width; i++){
-        for(var j=0; j<viewer.canvas.height;j++){
+    var minlat = 5000
+    var maxlat = -5000
+    var minlon = 5000
+    var maxlon = -5000
+    for(var i=0; i<viewer.canvas.width*latlonResolutionScale; i++){
+        for(var j=0; j<viewer.canvas.height*latlonResolutionScale;j++){
             var pos_pix = new Cesium.Cartesian2(i*s, j*s)
             var pos_cartesian = camera.pickEllipsoid(pos_pix, viewer.scene.globe.ellipsoid)
             if (pos_cartesian){
                 var pos_cartographic = Cesium.Cartographic.fromCartesian(pos_cartesian);           
                 var lat = Cesium.Math.toDegrees(pos_cartographic.latitude);               
                 var lon = Cesium.Math.toDegrees(pos_cartographic.longitude);
+                if(lat < minlat){minlat = lat};
+                if(lon < minlon){minlon = lon};
+                if(lat > maxlat){maxlat = lat};
+                if(lon > maxlon){maxlon = lon};
                 //var height = 0
                 out_string += '[('+i.toString()+','+j.toString()+'), (' + lat.toString() + ',' + lon.toString() + ')], ';
             }
@@ -109,31 +130,72 @@ function getPixelCoords(){
             }*/
         }
     }
-    var link = document.createElement('a');
-    var filename = "test.csv";
+    
+    var filename = Math.round(minlon).toString() + '_' + Math.round(maxlon).toString() + '_' + Math.round(minlat).toString() + '_' + Math.round(maxlat).toString() 
     //lonElement.value.toFixed(0).toString() + '_' + latElement.value.toFixed(0).toString()+'_'
            // +altElement.value.toFixed(0).toString()+'_'+headingElement.value.toFixed(0).toString() +'_'
            // +pitchElement.value.toFixed(0).toString()+'_'+rollElement.value.toFixed(0).toString()+'.csv';
-    link.download = filename;
+    if(filename.startsWith("5000")){
+        return filename
+    } 
+    var link = document.createElement('a');
+    link.download = filename + '.csv';
     link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(out_string);
     link.click();
-   // viewer.resolutionScale = 1.0;
+    //viewer.resolutionScale = 1.0;
+    return filename
 }
 screenshotElement = document.getElementById("screenshot")
 screenshotElement.addEventListener("click", function() {captureScreenshot()});  
 pixelElement = document.getElementById("pixel")
 pixelElement.addEventListener("click", function() {getPixelCoords()});
 
-var val1 = [Math.random() * 4 - 82, Math.random() * 4 + 24, 400000, Math.random() * 360 - 180, Math.random() * 180 - 180, 0]
-var val2 = [Math.random() * 4 - 82, Math.random() * 4 + 24, 400000, Math.random() * 360 - 180, Math.random() * 180 - 180, 0]
-var val3 = [Math.random() * 4 - 82, Math.random() * 4 + 24, 400000, Math.random() * 360 - 180, Math.random() * 180 - 180, 0]
-var vals = [val1, val2, val3]
+//var val1 = [Math.random() * 4 - 82, Math.random() * 4 + 24, 400000, Math.random() * 360 - 180, Math.random() * 180 - 180, 0]
+//var val2 = [Math.random() * 4 - 82, Math.random() * 4 + 24, 400000, Math.random() * 360 - 180, Math.random() * 180 - 180, 0]
+//var val3 = [Math.random() * 4 - 82, Math.random() * 4 + 24, 400000, Math.random() * 360 - 180, Math.random() * 180 - 180, 0]
+//var vals = [val1, val2, val3]
 
+/*const cnt = 1000
+var vals = []
+var latmin = -60 //24
+var latmax = 60 //32
+var lonmin = -180 //-84
+var lonmax = 180 //-78
+var altmin = 400000
+var altmax = 450000
+for(var i=0; i<cnt; i++){
+    vals.push(getRandomView(latmin, latmax, lonmin, lonmax, altmin, altmax))
+}*/
+var vals = [];
+var latmin, latmax, lonmin, lonmax, altmin, altmax, headingmin, headingmax, pitchmin, pitchmax, rollmin, rollmax;
+function genViews(){
+    updateVals();
+    var cnt = Number(numRandViewsElement.value);   
+    for(var i=0; i<cnt; i++){
+        vals.push(getRandomView())
+    }
+}
 
-
+function updateVals(){
+    latmin = Number(latMinElement.value)
+    latmax = Number(latMaxElement.value)
+    lonmin = Number(lonMinElement.value)
+    lonmax = Number(lonMaxElement.value)
+    altmin = Number(altMinElement.value)
+    altmax = Number(altMaxElement.value)
+    headingmin = Number(randHeadingMinElement.value)
+    headingmax = Number(randHeadingMaxElement.value)
+    pitchmin = Number(randPitchMinElement.value)
+    pitchmax = Number(randPitchMaxElement.value)
+    rollmin = Number(randRollMinElement.value)
+    rollmax = Number(randRollMaxElement.value)
+}
 
 function sequence(){
-    if(vals.length==0) return;
+    if(vals.length==0){
+        viewer.resolutionScale = 1.0;
+        return;
+    }     
     var val = vals.shift();
     lonElement.value = val[0]
     latElement.value = val[1]
@@ -142,18 +204,55 @@ function sequence(){
     pitchElement.value = val[4]
     rollElement.value = val[5]
     moveCamera();
-    captureScreenshot();
-    setTimeout(function(){
-        getPixelCoords();
-    }, waittime_ss)     
-    setTimeout(function(){
-        sequence();
-    }, waittime_csv + waittime_ss)
+    var filename = getPixelCoords();
+    if(!filename.startsWith("5000")){
+        captureScreenshot(filename);
+        //setTimeout(function(){
+      //      getPixelCoords();
+       // }, waittime_ss)     
+        setTimeout(function(){
+            sequence();
+        }, waittime_ss)
+    }
+    else{
+        sequence()
+    }
+    
 }
 sequenceElement = document.getElementById("sequence")
-sequenceElement.addEventListener("click", function() {sequence()});
+sequenceElement.addEventListener("click", function() {
+    genViews()
+    sequence()
+});
+
+randomElement.addEventListener("click", function() {
+    updateVals();
+    var view = getRandomView();  
+    goToView(view);
+});
    
 function getRandomView(){
-   // lonElement.value = Math.random() * 4 - 82, Math.random() * 4 + 24, 
+    var lonrange = lonmax-lonmin
+    var latrange = latmax-latmin
+    var altrange = altmax-altmin
+    var headingrange = headingmax-headingmin
+    var pitchrange = pitchmax-pitchmin
+    var rollrange = rollmax-rollmin
+    var randlon = Math.random() * lonrange + lonmin
+    var randlat = Math.random() * latrange + latmin
+    var randalt = Math.random() * altrange + altmin
+    var randheading = Math.random() * headingrange +headingmin
+    var randpitch = Math.random() * pitchrange +pitchmin
+    var randroll = Math.random() * rollrange +rollmin
+    return [randlon, randlat, randalt, randheading, randpitch, randroll]
 }
 
+function goToView(view){
+    lonElement.value = view[0]
+    latElement.value = view[1]
+    altElement.value = view[2]
+    headingElement.value = view[3]
+    pitchElement.value = view[4]
+    rollElement.value = view[5]
+    moveCamera();
+}

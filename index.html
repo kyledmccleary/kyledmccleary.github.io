@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <!-- Include the CesiumJS JavaScript and CSS files -->
   <script src="https://cesium.com/downloads/cesiumjs/releases/1.107/Build/Cesium/Cesium.js"></script>
+  <!-- <script src="./cesium/Build/Cesium/Cesium.js"></script> -->
   <link href="./main.css" rel="stylesheet">
 </head>
 <body>
@@ -34,6 +35,47 @@
         <button id="submit">Submit</button>
         <button id="screenshot">Take Screenshot</button>
         <button id="pixel">Get Pixel Lat/Lons</button>
+        <button id="random">Random View</button>
+
+        <label for="randlatmin">Rand Lat Min</label>
+        <input type="text" id="randlatmin" name="randlatmin" value=-90>
+
+        <label for="randlatmax">Rand Lat Max</label>
+        <input type="text" id="randlatmax" name="randlatmax" value="90" />
+
+        <label for="randlonmin">Rand Lon Min</label>
+        <input type="text" id="randlonmin" name="randlonmin" value=-180>
+
+        <label for="randlonmax">Rand Lon Max</label>
+        <input type="text" id="randlonmax" name="randlonmax" value="180" />
+
+        <label for="randaltmin">Rand Alt Min</label>
+        <input type="text" id="randaltmin" name="randaltmin" value=400000>
+
+        <label for="randaltmax">Rand Alt Max</label>
+        <input type="text" id="randaltmax" name="randaltmax" value=450000 />
+
+        <label for="randheadmin">Rand Heading Min</label>
+        <input type="text" id="randheadmin" name="randheadmin" value=-180>
+
+        <label for="randheadmax">Rand Heading Max</label>
+        <input type="text" id="randheadmax" name="randheadmax" value=180 />
+
+        <label for="randpitchmin">Rand Pitch Min</label>
+        <input type="text" id="randpitchmin" name="randpitchmin" value=-180>
+
+        <label for="randpitchmax">Rand Pitch Max</label>
+        <input type="text" id="randpitchmax" name="randpitchmax" value=0 />
+
+        <label for="randrollmin">Rand Roll Min</label>
+        <input type="text" id="randrollmin" name="randrollmin" value=-180>
+
+        <label for="randrollmax">Rand Roll Max</label>
+        <input type="text" id="randrollmax" name="randrollmax" value=180 />
+
+        <label for="numrandviews">Num Rand Views</label>
+        <input type="text" id="numrandviews" name="numrandviews" value=10 />
+
         <button id="sequence">Don't Click</button>
     </div>
     <script src="./czm.js"></script>>

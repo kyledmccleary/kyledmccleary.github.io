@@ -6,7 +6,9 @@ const viewer = new Cesium.Viewer("cesiumContainer", {
         }
     }
 });
-var layers = viewer.imageryLayers;
+viewer.baseLayerPicker.viewModel.selectedImagery = viewer.baseLayerPicker.viewModel.imageryProviderViewModels[9];
+
+//var layers = viewer.imageryLayers;
 //var baseLayer = layers.get(0);
 //layers.remove(baseLayer);
 //layers.addImageryProvider(Cesium.IonImageryProvider.fromAssetId(3954));
@@ -106,8 +108,8 @@ function getPixelCoords(){
     var maxlat = -5000
     var minlon = 5000
     var maxlon = -5000
-    for(var i=0; i<viewer.canvas.width*latlonResolutionScale; i++){
-        for(var j=0; j<viewer.canvas.height*latlonResolutionScale;j++){
+    for(var i=0; i<viewer.canvas.width/viewer.resolutionScale; i++){
+        for(var j=0; j<viewer.canvas.height/viewer.resolutionScale;j++){
             var pos_pix = new Cesium.Cartesian2(i*s, j*s)
             var pos_cartesian = camera.pickEllipsoid(pos_pix, viewer.scene.globe.ellipsoid)
             if (pos_cartesian){
@@ -200,6 +202,8 @@ function sequence(){
     pitchElement.value = val[4]
     rollElement.value = val[5]
     moveCamera();
+    viewer.resolutionScale = targetResolutionScale;
+    viewer.render()
     var filename = getPixelCoords();
    // if(!filename.startsWith("5000")){
     viewer.resolutionScale = targetResolutionScale;

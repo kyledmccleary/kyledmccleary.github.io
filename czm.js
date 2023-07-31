@@ -36,6 +36,7 @@ const randPitchMinElement = document.getElementById("randpitchmin")
 const randPitchMaxElement = document.getElementById("randpitchmax")
 const randRollMinElement = document.getElementById("randrollmin")
 const randRollMaxElement = document.getElementById("randrollmax")
+const orbitElement = document.getElementById("orbit_box")
 
 const waittime_ss = 3000
 
@@ -99,7 +100,7 @@ function captureScreenshot(filename){
     link.href = img;
     link.click();
 }
-function getPixelCoords(){
+function getPixelCoords(f=null){
     //viewer.resolutionScale = latlonResolutionScale;
     //viewer.render();
     var out_string = '';
@@ -128,8 +129,13 @@ function getPixelCoords(){
             }*/
         }
     }
+    if(f){
+        filename = f
+    }
+    else{
+        var filename = Math.round(minlon).toString() + '_' + Math.round(maxlon).toString() + '_' + Math.round(minlat).toString() + '_' + Math.round(maxlat).toString() 
+    }
     
-    var filename = Math.round(minlon).toString() + '_' + Math.round(maxlon).toString() + '_' + Math.round(minlat).toString() + '_' + Math.round(maxlat).toString() 
     //lonElement.value.toFixed(0).toString() + '_' + latElement.value.toFixed(0).toString()+'_'
            // +altElement.value.toFixed(0).toString()+'_'+headingElement.value.toFixed(0).toString() +'_'
            // +pitchElement.value.toFixed(0).toString()+'_'+rollElement.value.toFixed(0).toString()+'.csv';
@@ -189,7 +195,7 @@ function updateVals(){
     rollmax = Number(randRollMaxElement.value)
 }
 
-function sequence(){
+function sequence(f=null){
     if(vals.length==0){
         viewer.resolutionScale = 1.0;
         return;
@@ -204,7 +210,7 @@ function sequence(){
     moveCamera();
     viewer.resolutionScale = targetResolutionScale;
     viewer.render()
-    var filename = getPixelCoords();
+    var filename = getPixelCoords(f);
    // if(!filename.startsWith("5000")){
     viewer.resolutionScale = targetResolutionScale;
     viewer.render()
@@ -215,7 +221,7 @@ function sequence(){
            // }, waittime_ss)     
     }, waittime_ss)
     setTimeout(function(){
-        sequence();
+        sequence(f);
     }, waittime_ss)
   //  }
    /* else{
@@ -261,3 +267,13 @@ function goToView(view){
     rollElement.value = view[5]
     moveCamera();
 }
+
+function orbitSequence(){
+    vals = JSON.parse(orbitElement.value)
+    //alert(vals[0])
+}
+const orb_button = document.getElementById("orbit")
+orb_button.addEventListener("click", function() {
+    orbitSequence()
+    sequence('orb3')
+});

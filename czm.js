@@ -38,7 +38,7 @@ const randRollMinElement = document.getElementById("randrollmin")
 const randRollMaxElement = document.getElementById("randrollmax")
 const orbitElement = document.getElementById("orbit_box")
 
-const waittime_ss = 3000
+const waittime_ss = 500
 
 function moveCamera(){
         const frustum = new Cesium.PerspectiveFrustum({

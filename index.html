@@ -11,26 +11,57 @@
     <div id="cesiumContainer"></div>
     <h3>Enter Satellite Pose & Camera Horizontal FOV</h3>
     <div>
-        <label for="lat">Latitude</label>
-        <input type="text" id="lat" name="lat" value=40.4432>
+        <label for="X">X_ECEF</label>
+        <input type="text" id="X" name="X" value=-769832.6812895203>
 
-        <label for="lon">Longitude</label>
-        <input type="text" id="lon" name="lon" value=-79.9428>
+        <label for="Y">Y_ECEF</label>
+        <input type="text" id="Y" name="Y" value=-4195296.751239066>
 
-        <label for="alt">Altitude</label>
-        <input type="text" id="alt" name="alt" value=1000>
+        <label for="Z">Z_ECEF</label>
+        <input type="text" id="Z" name="Z" value=5309234.0086461345>
 
-        <label for="heading">Heading (N->E)</label>
-        <input type="text" id="heading" name="heading" value=-30>
+        <label for="D_x">Direction vector x</label>
+        <input type="text" id="D_x" name="D_x" value=0.0>
 
-        <label for="pitch">Pitch</label>
-        <input type="text" id="pitch" name="pitch" value=-80>
+        <label for="D_y">Direction vector y</label>
+        <input type="text" id="D_y" name="D_y" value=1.0>
 
-        <label for="roll">Roll</label>
-        <input type="text" id="roll" name="roll" value=45>
+        <label for="D_z">Direction vector z</label>
+        <input type="text" id="D_z" name="D_z" value=0.0>
+
+        <label for="U_x">Up vector x</label>
+        <input type="text" id="U_x" name="U_x" value=-0.17639759906721267>
+
+        <label for="U_y">Up vector y</label>
+        <input type="text" id="U_y" name="U_y" value=-0.0>
+
+        <label for="U_z">Up vector z</label>
+        <input type="text" id="U_z" name="U_z" value=-0.9843189965876524>
+
+        <label for="R_x">Right vector x</label>
+        <input type="text" id="R_x" name="R_x" value=-0.9843189965876524>
+
+        <label for="R_y">Right vector y</label>
+        <input type="text" id="R_y" name="R_y" value=0.0>
+
+        <label for="R_z">Right vector z</label>
+        <input type="text" id="R_z" name="R_z" value=0.17639759906721267>
 
         <label for="hfov">Horizontal FOV</label>
-        <input type="text" id="hfov" name="hfov" value=58>
+        <input type="text" id="hfov" name="hfov" value=75>
+
+        <label for="lat">Latitude</label>
+        <input type="text" id="lat" name="lat" value=0>
+        <label for="lon">Longitude</label>
+        <input type="text" id="lon" name="lon" value=0>
+        <label for="alt">Altitude</label>
+        <input type="text" id="alt" name="alt" value=0>
+        <label for="heading">Heading</label>
+        <input type="text" id="heading" name="heading" value=0>
+        <label for="pitch">Pitch</label>
+        <input type="text" id="pitch" name="pitch" value=-90>
+        <label for="roll">Roll</label>
+        <input type="text" id="roll" name="roll" value=0>
 
         <button id="submit">Submit</button>
         <button id="screenshot">Take Screenshot</button>
@@ -50,10 +81,10 @@
         <input type="text" id="randlonmax" name="randlonmax" value="180" />
 
         <label for="randaltmin">Rand Alt Min</label>
-        <input type="text" id="randaltmin" name="randaltmin" value=400000>
+        <input type="text" id="randaltmin" name="randaltmin" value=370000>
 
         <label for="randaltmax">Rand Alt Max</label>
-        <input type="text" id="randaltmax" name="randaltmax" value=450000 />
+        <input type="text" id="randaltmax" name="randaltmax" value=470000 />
 
         <label for="randheadmin">Rand Heading Min</label>
         <input type="text" id="randheadmin" name="randheadmin" value=-180>
@@ -62,10 +93,10 @@
         <input type="text" id="randheadmax" name="randheadmax" value=180 />
 
         <label for="randpitchmin">Rand Pitch Min</label>
-        <input type="text" id="randpitchmin" name="randpitchmin" value=-180>
+        <input type="text" id="randpitchmin" name="randpitchmin" value=-135>
 
         <label for="randpitchmax">Rand Pitch Max</label>
-        <input type="text" id="randpitchmax" name="randpitchmax" value=0 />
+        <input type="text" id="randpitchmax" name="randpitchmax" value=-45 />
 
         <label for="randrollmin">Rand Roll Min</label>
         <input type="text" id="randrollmin" name="randrollmin" value=-180>
@@ -75,13 +106,16 @@
 
         <label for="numrandviews">Num Rand Views</label>
         <input type="text" id="numrandviews" name="numrandviews" value=10 />
+        <label for="startno">Start number</label>
+        <input type="text" id="startno" name="startno" value=0 />
 
         <button id="sequence">Don't Click</button>
 
         <textarea rows="5" cols="60" name="orbit" id="orbit_box">
-[[lon, lat, alt, heading, pitch, roll],[lon, lat, alt, heading, pitch, roll]]
+[[X_ECEF, Y_ECEF, Z_ECEF, D_x, D_y, D_z, U_x, U_y, U_z, R_x, R_y, R_z], [etc]]
         </textarea>
         <button id="orbit">Orb</button>
+        <button id="orb_view">Orb view only</button>
 
     </div>
     <script src="./czm.js"></script>>

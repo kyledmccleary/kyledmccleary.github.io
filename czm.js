@@ -290,7 +290,7 @@ function sequence(){
     }, waittime_ss)
     setTimeout(function(){
         sequence();
-    }, waittime_ss)
+    }, waittime_ss + 1000)
 }
 sequenceElement = document.getElementById("sequence")
 sequenceElement.addEventListener("click", function() {
@@ -319,7 +319,7 @@ function hprsequence(){
     }, waittime_ss)
     setTimeout(function(){
         hprsequence();
-    }, waittime_ss)    
+    }, waittime_ss+1000)    
 }
 
 randomElement.addEventListener("click", function() {

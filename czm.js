@@ -294,6 +294,7 @@ function sequence(){
 }
 sequenceElement = document.getElementById("sequence")
 sequenceElement.addEventListener("click", function() {
+    fno = Number(startElement.value)
     genViews()
     hprsequence()
 });

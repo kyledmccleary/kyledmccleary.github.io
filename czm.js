@@ -51,6 +51,7 @@ const latElement = document.getElementById("lat")
 const lonElement = document.getElementById("lon")
 const altElement = document.getElementById("alt")
 const startElement = document.getElementById("startno")
+const resElement = document.getElementById("res")
 
 function moveCamera(){   
         const frustum = new Cesium.PerspectiveFrustum({
@@ -264,6 +265,7 @@ function checkLandmarks(){
     return false
 }
 function sequence(){
+    targetResolutionScale = Number(res.value)
     if(vals.length==0){
         viewer.resolutionScale = 1.0;
         return;
@@ -300,6 +302,7 @@ sequenceElement.addEventListener("click", function() {
 });
 
 function hprsequence(){
+    targetResolutionScale = Number(res.value)
     if(vals.length==0){
         viewer.resolutionScale = 1.0;
         return;

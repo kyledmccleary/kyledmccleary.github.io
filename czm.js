@@ -52,6 +52,7 @@ const lonElement = document.getElementById("lon")
 const altElement = document.getElementById("alt")
 const startElement = document.getElementById("startno")
 const resElement = document.getElementById("res")
+const waitElement = document.getElementById("wait")
 
 function moveCamera(){   
         const frustum = new Cesium.PerspectiveFrustum({
@@ -265,7 +266,8 @@ function checkLandmarks(){
     return false
 }
 function sequence(){
-    targetResolutionScale = Number(res.value)
+    waittime_ss = Number(waitElement.value)
+    targetResolutionScale = Number(resElement.value)
     if(vals.length==0){
         viewer.resolutionScale = 1.0;
         return;
@@ -292,7 +294,7 @@ function sequence(){
     }, waittime_ss)
     setTimeout(function(){
         sequence();
-    }, waittime_ss + 1000)
+    }, waittime_ss + 200)
 }
 sequenceElement = document.getElementById("sequence")
 sequenceElement.addEventListener("click", function() {
@@ -302,7 +304,8 @@ sequenceElement.addEventListener("click", function() {
 });
 
 function hprsequence(){
-    targetResolutionScale = Number(res.value)
+    waittime_ss = Number(waitElement.value)
+    targetResolutionScale = Number(resElement.value)
     if(vals.length==0){
         viewer.resolutionScale = 1.0;
         return;
@@ -323,7 +326,7 @@ function hprsequence(){
     }, waittime_ss)
     setTimeout(function(){
         hprsequence();
-    }, waittime_ss+1000)    
+    }, waittime_ss+200)    
 }
 
 randomElement.addEventListener("click", function() {
